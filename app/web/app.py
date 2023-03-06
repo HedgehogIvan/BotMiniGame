@@ -1,14 +1,8 @@
-from typing import Optional
-
-from aiohttp.web import Application as AiohttpApplication
-
-from app.web.config import Config, setup_config
-from app.web.logger import setup_logging
-from app.web.routes import setup_routes
-
-
-class Application(AiohttpApplication):
-    config: Optional[Config] = None
+from app.store import setup_store
+from .aiohttp_extansion import Application
+from .config import setup_config
+from .logger import setup_logging
+from .routes import setup_routes
 
 
 app = Application()
@@ -19,4 +13,5 @@ def setup_app() -> Application:
     setup_routes(app)
     # TODO: Вынести передачу путя до конфиг файла в другое место
     setup_config(app, "config.yaml")
+    setup_store(app)
     return app

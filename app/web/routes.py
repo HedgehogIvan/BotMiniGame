@@ -1,5 +1,5 @@
-from aiohttp.web_app import Application
-from app.admin_api.routes import setup_routes as admin_setup_routes
+from ..admin.routes import setup_routes as admin_setup_routes
+from .aiohttp_extansion import Application
 
 
 def setup_routes(app: Application):

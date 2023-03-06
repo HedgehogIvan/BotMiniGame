@@ -1,8 +1,11 @@
+import typing
 from dataclasses import dataclass
 from typing import Optional
 
 import yaml
-from aiohttp.web import Application
+
+if typing.TYPE_CHECKING:
+    from .aiohttp_extansion import Application
 
 
 @dataclass
@@ -10,7 +13,7 @@ class Config:
     token: Optional[str] = None
 
 
-def setup_config(app: Application, config_path):
+def setup_config(app: "Application", config_path):
     with open(config_path, 'r', encoding="utf-8") as f:
         raw_config = yaml.safe_load(f)
 

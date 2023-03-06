@@ -26,3 +26,5 @@ alembic==1.9.4
 marshmallow-dataclass==8.5.11
 mypy-extensions==1.0.0
 typing-inspect==0.8.0
+
+asyncpg=0.27.0
