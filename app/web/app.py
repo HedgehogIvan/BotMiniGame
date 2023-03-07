@@ -1,3 +1,8 @@
+import os
+
+from aiohttp_session import setup as session_setup
+from aiohttp_session.cookie_storage import EncryptedCookieStorage
+
 from app.store import setup_store
 from .aiohttp_extansion import Application
 from .config import setup_config
@@ -21,5 +26,6 @@ def setup_app() -> Application:
     setup_middlewares(app)
     # TODO: Вынести передачу путя до конфиг файла в другое место
     setup_config(app, "config.yaml")
+    session_setup(app, EncryptedCookieStorage(os.urandom(32)))
     setup_store(app)
     return app
