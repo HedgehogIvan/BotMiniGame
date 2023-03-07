@@ -9,6 +9,7 @@ from aiohttp_session import new_session, get_session
 from ..web.aiohttp_extansion import View
 from .models import Admin
 from .shemes import AdminScheme
+from ..web.utils import available_for_admin
 
 __all__ = ["AdminCreateView", "AdminLoginView", "AdminCurrentView"]
 
@@ -16,9 +17,8 @@ __all__ = ["AdminCreateView", "AdminLoginView", "AdminCurrentView"]
 class AdminCreateView(View):
     @request_schema(AdminScheme)
     @response_schema(AdminScheme)
+    @available_for_admin
     async def post(self):
-        # TODO: Добавить проверку, что это нужный админ
-        # Временное получение даты, до схем
         data = await self.request.json()
 
         login = data["login"]
@@ -86,8 +86,8 @@ class AdminLoginView(View):
 
 class AdminCurrentView(View):
     @response_schema(AdminScheme)
+    @available_for_admin
     async def get(self):
-        # TODO: Вставить проверку пользователя
         session = await get_session(self.request)
 
         try:
