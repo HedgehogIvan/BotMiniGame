@@ -1,4 +1,5 @@
 from hashlib import sha256
+from typing import Optional
 
 from aiohttp.web_exceptions import HTTPForbidden, HTTPConflict
 from aiohttp.web_response import json_response
@@ -19,13 +20,11 @@ class CreateAdminView(View):
         data = await self.request.json()
 
         login = data["login"]
-        password = self._hash_password(data)
+        password = await self._hash_password()
 
         admin: Admin = await self.store.admins.get_by_login(login)
 
         if not admin:
-            # TODO: Проверять наличие сессии
-
             new_admin = await self.store.admins.create_admin(login, password)
             return json_response(data={
                 "id": new_admin.id,
@@ -34,9 +33,13 @@ class CreateAdminView(View):
         else:
             raise HTTPConflict
 
-    def _hash_password(self, data: dict):
-        # TODO: Заменить реализацию после подключения middleware
-        # data: dict = self.request["data"]
+    async def _hash_password(self):
+        """
+        Хэширует пароль, полученный при запросе
+        :return: Хэшированный пароль или None
+        """
+        data: dict = await self.request.json()
+
         if "password" in data:
             return sha256(data["password"].encode("utf-8")).hexdigest()
         return None
