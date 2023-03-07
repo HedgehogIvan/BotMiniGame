@@ -2,13 +2,17 @@ from hashlib import sha256
 
 from aiohttp.web_exceptions import HTTPForbidden, HTTPConflict
 from aiohttp.web_response import json_response
+from aiohttp_apispec import request_schema, response_schema
 from aiohttp_session import new_session
 
 from ..web.aiohttp_extansion import View
 from .models import Admin
+from .shemes import AdminScheme
 
 
 class CreateAdminView(View):
+    @request_schema(AdminScheme)
+    @response_schema(AdminScheme)
     async def post(self):
         # TODO: Добавить проверку, что это нужный админ
         # Временное получение даты, до схем
