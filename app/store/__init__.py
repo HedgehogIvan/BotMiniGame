@@ -1,7 +1,6 @@
 import typing
 
 from .database.database import Database
-from .tg_api.accessor import TgApiAccessor
 
 if typing.TYPE_CHECKING:
     from ..web.aiohttp_extansion import Application
@@ -10,6 +9,7 @@ if typing.TYPE_CHECKING:
 class Store:
     def __init__(self, app: "Application"):
         from .admin.accessor import AdminAccessor
+        from .tg_api.accessor import TgApiAccessor
 
         self.admins = AdminAccessor(app)
         self.tg_api = TgApiAccessor(app)

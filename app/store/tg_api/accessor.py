@@ -7,8 +7,7 @@ from ...base.base_accessor import BaseAccessor
 from ...tg_bot.api import TgClient
 from ...tg_bot.bot import Poller, Worker
 
-if typing.TYPE_CHECKING:
-    from ...web.aiohttp_extansion import Application
+from ...web.aiohttp_extansion import Application
 
 
 class TgApiAccessor(BaseAccessor):
