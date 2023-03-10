@@ -11,10 +11,13 @@ if typing.TYPE_CHECKING:
 @dataclass
 class Config:
     token: Optional[str] = None
+    workers_count: Optional[int] = None
 
 
 def setup_config(app: "Application", config_path):
     with open(config_path, 'r', encoding="utf-8") as f:
         raw_config = yaml.safe_load(f)
 
-    app.config = Config(token=raw_config["bot"]["token"])
+    bot_c = raw_config["bot"]
+
+    app.config = Config(token=bot_c["token"], workers_count=bot_c["workers_count"])

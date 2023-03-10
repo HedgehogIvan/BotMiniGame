@@ -1,5 +1,8 @@
+import typing
 from logging import getLogger
-from ..web.aiohttp_extansion import Application
+
+if typing.TYPE_CHECKING:
+    from ..web.aiohttp_extansion import Application
 
 
 class BaseAccessor:
