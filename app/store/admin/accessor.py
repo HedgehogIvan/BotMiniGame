@@ -1,6 +1,6 @@
 from typing import Optional
 
-from sqlalchemy import select, ChunkedIteratorResult, insert
+from sqlalchemy import select, ChunkedIteratorResult, insert, delete, update
 
 from ...admin.models import Admin, AdminModel
 from ...base.base_accessor import BaseAccessor
@@ -35,3 +35,19 @@ class AdminAccessor(BaseAccessor):
                 return Admin(admin.id, admin.login, admin.password)
             else:
                 return None
+
+    async def delete_admin(self, login: str):
+        query = delete(AdminModel).where(AdminModel.login == login)
+
+        async with self.app.database.session() as session:
+            await session.execute(query)
+
+            await session.commit()
+
+    async def update_pass_admin(self, admin_login: str, new_pass: str):
+        query = update(AdminModel).where(AdminModel.login == admin_login).values(password=new_pass)
+
+        async with self.app.database.session() as session:
+            await session.execute(query)
+
+            await session.commit()
