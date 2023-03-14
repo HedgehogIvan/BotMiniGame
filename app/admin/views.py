@@ -8,7 +8,7 @@ from aiohttp_session import new_session, get_session
 
 from ..web.aiohttp_extansion import View
 from .models import Admin
-from .shemes import AdminScheme, AdminChangePasswordSchema, AdminDeleteSchema
+from .schemes import AdminScheme, AdminChangePasswordSchema, AdminDeleteSchema
 from ..web.utils import available_for_admin
 
 __all__ = ["AdminCreateView", "AdminLoginView", "AdminCurrentView", "AdminDeleteView", "AdminChangePassView"]
